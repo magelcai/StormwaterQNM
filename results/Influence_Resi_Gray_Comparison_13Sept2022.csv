@@ -1,0 +1,135 @@
+var,rel.inf.Biodiv,rel.inf.PhysHealth
+Residential_Residential,21.97820174,23.34929102
+`Gray infrastructure_Gray infrastructure`,17.76684885,17.23808804
+`Gray infrastructure_Flooding`,6.832322649,7.011242222
+Flooding_Flooding,6.375706218,6.697449632
+`Gray infrastructure_Toxics`,5.73447596,4.480099326
+Nutrients_Nutrients,2.831817345,2.805881837
+Residential_Toxics,2.638524473,2.653905573
+Residential_Nutrients,2.038128629,1.860387396
+Residential_Sediment,1.228599335,0.900178746
+Residential_Bacteria,1.193675165,1.330031854
+Noise_Noise,1.192960936,0.978096398
+`Sediment_Water quality`,0.947149572,0.672235127
+`Nutrients_Water quality`,0.915067624,1.630816034
+`Gray infrastructure_Sediment`,0.654882086,0.742750582
+Flooding_Sediment,0.653182271,0.467906843
+Flooding_Bacteria,0.635171578,0.815979558
+`Water quality_Social cohesion`,0.630340982,0.936619103
+`Bacteria_Physical health`,0.627418287,0.587160302
+Flooding_Salmon,0.603307318,0.66332398
+`Source control_Toxics`,0.576356694,0.254670519
+Salmon_Biodiversity,0.569478528,0.419233609
+`Local foods_Affordability`,0.513687377,0.656437954
+`Transportation_Air quality`,0.500250453,0.492292421
+`Air quality_Social cohesion`,0.476526424,0.510225808
+Transportation_Transportation,0.453817237,0.289478373
+`Green infrastructure_Urban heat island`,0.412866672,0.448576532
+Affordability_Affordability,0.40789152,0.394420111
+Sediment_Sediment,0.40325183,0.221998182
+Biodiversity_Biodiversity,0.398101859,0.478280247
+`Access to nature_Physical health`,0.396608787,0.470501263
+`Toxics_Water quality`,0.367077218,0.28375648
+`Climate mitigation_Climate mitigation`,0.357505574,0.184553166
+`Water quality_Physical health`,0.353049942,0.324063631
+`Water quality_Salmon`,0.353019733,0.525366675
+`Transportation_Water temperature`,0.341203336,0.385362172
+`Industrial_Urban heat island`,0.339408213,0.353638732
+Toxics_Toxics,0.335349222,0.262084834
+`Green infrastructure_Green infrastructure`,0.325514975,0.142807284
+`Economic wellbeing_Physical health`,0.324097403,0.412816077
+`Green infrastructure_Sediment`,0.310686799,0.538987483
+`Industrial_Residential property value`,0.308992265,0.175718161
+`Residential property value_Economic wellbeing`,0.303861852,0.227051001
+`Access to nature_Local foods`,0.298575237,0.174200924
+`Physical health_Mental health`,0.293779685,0.222307877
+Transportation_Flooding,0.290123654,0.151448839
+`Local foods_Social cohesion`,0.289184247,0.217824398
+`Climate mitigation_Urban heat island`,0.283730528,0.299756926
+`Urban heat island_Urban heat island`,0.282750389,0.204260995
+`Economic wellbeing_Economic wellbeing`,0.273203325,0.395633529
+`Water quality_Biodiversity`,0.268499505,0.500457668
+`Gray infrastructure_Local jobs`,0.263670959,0.072841568
+`Green infrastructure_Toxics`,0.253396942,0.188968512
+`Flooding_Air quality`,0.248548064,0.25951409
+`Urban heat island_Biodiversity`,0.244016671,0.313892828
+`Air quality_Physical health`,0.242341188,0.123061363
+Industrial_Toxics,0.241951287,0.237353916
+`Walkability_Physical health`,0.2393163,0.158904246
+Industrial_Flooding,0.237207936,0.167783886
+`Access to nature_Access to nature`,0.236302835,0.174419063
+`Industrial_Water temperature`,0.232653893,0.11425873
+Industrial_Industrial,0.232484754,0.110232293
+`Economic wellbeing_Mental health`,0.219671086,0.100395883
+`Walkability_Air quality`,0.217679423,0.325161726
+`Physical health_Economic wellbeing`,0.212790561,0.16117367
+`Access to nature_Residential property value`,0.211607574,0.111277547
+`Transportation_Urban heat island`,0.208673443,0.162360239
+`Water quality_Water quality`,0.207593973,0.31900611
+`Walkability_Residential property value`,0.207144285,0.14803587
+`Source control_Source control`,0.206898918,0.274802411
+`Local foods_Local foods`,0.205980366,0.120730927
+`Transportation_Residential property value`,0.199041011,0.221131005
+`Flooding_Residential property value`,0.198537089,0.116515205
+`Noise_Physical health`,0.197862927,0.164723921
+Industrial_Sediment,0.197396462,0.173522135
+`Water quality_Local foods`,0.197186735,0.143098198
+Walkability_Noise,0.197063304,0.173087593
+Industrial_Noise,0.195811638,0.165420374
+`Green infrastructure_Access to nature`,0.19474318,0.233742362
+`Local jobs_Social cohesion`,0.191654182,0.260286864
+`Climate mitigation_Salmon`,0.181604367,0.357657253
+`Access to nature_Mental health`,0.181013324,0.203294779
+`Bacteria_Local foods`,0.179685456,0.198120008
+Walkability_Affordability,0.173918895,0.203875689
+`Local jobs_Residential property value`,0.172417395,0.090118252
+`Social cohesion_Social cohesion`,0.171317106,0.237268552
+`Climate mitigation_Biodiversity`,0.167425645,0.213998913
+`Climate mitigation_Water temperature`,0.161166712,0.249292635
+Bacteria_Bacteria,0.158868341,0.203140133
+`Access to nature_Social cohesion`,0.158504724,0.209112269
+`Salmon_Physical health`,0.157501511,0.211873709
+`Affordability_Economic wellbeing`,0.157393582,0.207582153
+`Urban heat island_Physical health`,0.154960971,0.131629504
+`Industrial_Air quality`,0.154839469,0.279369361
+`Social cohesion_Mental health`,0.143618023,0.166553649
+Transportation_Noise,0.143330471,0.086924648
+`Mental health_Mental health`,0.142964395,0.091557012
+Salmon_Salmon,0.142704181,0.133787857
+`Residential property value_Residential property value`,0.14248216,0.215135654
+`Water temperature_Water temperature`,0.141116782,0.119373087
+`Residential property value_Affordability`,0.140715115,0.166698407
+Toxics_Biodiversity,0.138482185,0.039817729
+`Local jobs_Local jobs`,0.131971558,0.156142129
+`Air quality_Air quality`,0.131274744,0.071167804
+`Salmon_Local foods`,0.128214695,0.157345992
+Walkability_Walkability,0.126134876,0.18839011
+`Bacteria_Water quality`,0.123651363,0.179236927
+`Water temperature_Water quality`,0.122543714,0.242527869
+`Industrial_Local jobs`,0.121838871,0.148502981
+`Noise_Residential property value`,0.121328484,0.183120828
+`Green infrastructure_Local jobs`,0.120660574,0.142253382
+`Physical health_Physical health`,0.116521894,0.198765689
+Toxics_Salmon,0.11493925,0.116428246
+`Access to nature_Walkability`,0.112885453,0.100372495
+`Local foods_Mental health`,0.112381245,0.115654357
+`Local jobs_Economic wellbeing`,0.11218478,0.138624284
+`Economic wellbeing_Affordability`,0.108940555,0.061494248
+`Green infrastructure_Noise`,0.104783686,0.176250573
+`Green infrastructure_Air quality`,0.102773667,0.115352722
+`Walkability_Social cohesion`,0.101877013,0.168771958
+`Green infrastructure_Flooding`,0.101133723,0.170960421
+`Urban heat island_Water temperature`,0.100575125,0.136985316
+`Local foods_Physical health`,0.092308914,0.101575977
+`Noise_Mental health`,0.092219615,0.144653299
+`Access to nature_Affordability`,0.089619626,0.067695822
+`Biodiversity_Local foods`,0.088843182,0.101166442
+Biodiversity_Salmon,0.088839909,0.088259242
+Transportation_Toxics,0.084598234,0.066162965
+`Walkability_Climate mitigation`,0.080191058,0.120219461
+`Mental health_Economic wellbeing`,0.0716758,0.104939927
+`Mental health_Physical health`,0.06998933,0.068367638
+`Noise_Social cohesion`,0.063234179,0.220962136
+`Green infrastructure_Climate mitigation`,0.062704137,0.062203936
+`Toxics_Physical health`,0.056514355,0.047671533
+Noise_Biodiversity,0.051157092,0.086234054
