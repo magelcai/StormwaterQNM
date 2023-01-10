@@ -1,0 +1,100 @@
+Residential -> Toxics
+Industrial -> Toxics
+Transportation -> Toxics
+Transportation -> Water temperature
+Transportation -> Flooding
+Residential -> Nutrients
+Residential -> Sediment
+Residential -> Bacteria
+Industrial -> Sediment
+Industrial -> Flooding
+Flooding -> Bacteria
+Flooding -* Salmon
+Water quality -> Salmon
+Air quality -> Physical health
+Urban heat island -* Physical health
+Nutrients -* Water quality
+Flooding -> Sediment
+Sediment -* Water quality
+Mental health <-> Physical health
+Water quality -> Physical health
+Social cohesion -> Mental health
+Toxics -* Physical health
+Biodiversity <-> Salmon
+Urban heat island -* Biodiversity
+Bacteria -* Physical health
+Air quality -> Social cohesion
+Access to nature -> Social cohesion
+Transportation -> Noise
+Water quality -> Biodiversity
+Noise -* Biodiversity
+Salmon -> Physical health
+Climate mitigation -> Salmon
+Climate mitigation -* Water temperature
+Climate mitigation -> Biodiversity
+Access to nature -> Physical health
+Flooding -* Air quality
+Industrial -> Noise
+Transportation -* Air quality
+Economic wellbeing <-> Physical health
+Affordability <-> Economic wellbeing
+Access to nature -* Affordability
+Local foods -> Social cohesion
+Salmon -> Local foods
+Water quality -> Local foods
+Toxics -* Water quality
+Local foods -> Physical health
+Water quality -> Social cohesion
+Local jobs -> Economic wellbeing
+Walkability -> Climate mitigation
+Walkability -> Affordability
+Access to nature -> Walkability
+Walkability -> Social cohesion
+Walkability -> Air quality
+Walkability -* Noise
+Industrial -> Water temperature
+Toxics -* Biodiversity
+Noise -* Physical health
+Access to nature -> Mental health
+Local foods -> Affordability
+Water temperature -* Water quality
+Bacteria -* Water quality
+Bacteria -* Local foods
+Walkability -> Physical health
+Flooding -* Property value
+Property value -* Affordability
+Noise -* Property value
+Access to nature -> Property value
+Industrial -* Property value
+Transportation -> Property value
+Walkability -> Property value
+Property value -> Economic wellbeing
+Local jobs -> Property value
+Gray infrastructure -* Flooding
+Gray infrastructure -* Sediment
+Gray infrastructure -* Toxics
+Green infrastructure -* Toxics
+Green infrastructure -> Access to nature
+Green infrastructure -> Climate mitigation
+Green infrastructure -* Noise
+Gray infrastructure -> Local jobs
+Green infrastructure -> Local jobs
+Source control -* Toxics
+Green infrastructure -* Flooding
+Green infrastructure -> Air quality
+Green infrastructure -* Urban heat island
+Toxics -* Salmon
+Noise -* Mental health
+Urban heat island -> Water temperature
+Economic wellbeing <-> Mental health
+Biodiversity -> Local foods
+Local jobs -> Social cohesion
+Access to nature -> Local foods
+Local foods -> Mental health
+Noise -* Social cohesion
+Industrial -* Air quality
+Industrial -> Local jobs
+Climate mitigation -* Urban heat island
+Industrial -> Urban heat island
+Transportation -> Urban heat island
+Green infrastructure -* Sediment
