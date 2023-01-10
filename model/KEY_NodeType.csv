@@ -1,0 +1,30 @@
+﻿Node,Type
+Access to nature,human
+Affordability,human
+Air quality,human
+Bacteria,stressor
+Biodiversity,nature
+Climate mitigation,nature
+Economic wellbeing,human
+Flooding,stressor
+Gray infrastructure,solution
+Green infrastructure,solution
+Industrial,source
+Local foods,human
+Local jobs,human
+Mental health,human
+Noise,stressor
+Nutrients,stressor
+Physical health,human
+Property value,human
+Residential,source
+Salmon,nature
+Sediment,stressor
+Social cohesion,human
+Source control,solution
+Toxics,stressor
+Transportation,source
+Urban heat island,stressor
+Walkability,human
+Water quality,nature
+Water temperature,stressor

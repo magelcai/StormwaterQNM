@@ -1,0 +1,135 @@
+﻿var,link
+`Access to nature_Access to nature`,Access to nature -* Access to nature
+`Access to nature_Affordability`,Access to nature -* Affordability
+`Access to nature_Local foods`,Access to nature -> Local foods
+`Access to nature_Mental health`,Access to nature -> Mental health
+`Access to nature_Physical health`,Access to nature -> Physical health
+`Access to nature_Residential property value`,Access to nature -> Property value
+`Access to nature_Social cohesion`,Access to nature -> Social cohesion
+`Access to nature_Walkability`,Access to nature -> Walkability
+`Affordability_Economic wellbeing`,Affordability -> Economic wellbeing
+`Air quality_Air quality`,Air quality -* Air quality
+`Air quality_Physical health`,Air quality -> Physical health
+`Air quality_Social cohesion`,Air quality -> Social cohesion
+`Bacteria_Local foods`,Bacteria -* Local foods
+`Bacteria_Physical health`,Bacteria -* Physical health
+`Bacteria_Water quality`,Bacteria -* Water quality
+`Biodiversity_Local foods`,Biodiversity -> Local foods
+`Climate mitigation_Biodiversity`,Climate mitigation -> Biodiversity
+`Climate mitigation_Climate mitigation`,Climate mitigation -* Climate mitigation
+`Climate mitigation_Salmon`,Climate mitigation -> Salmon
+`Climate mitigation_Urban heat island`,Climate mitigation -* Urban heat island
+`Climate mitigation_Water temperature`,Climate mitigation -* Water temperature
+`Economic wellbeing_Affordability`,Economic wellbeing -> Affordability
+`Economic wellbeing_Economic wellbeing`,Economic wellbeing -* Economic wellbeing
+`Economic wellbeing_Mental health`,Economic wellbeing -> Mental health
+`Economic wellbeing_Physical health`,Economic wellbeing -> Physical health
+`Flooding_Air quality`,Flooding -* Air quality
+`Flooding_Residential property value`,Flooding -* Property value
+`Gray infrastructure_Flooding`,Gray infrastructure -* Flooding
+`Gray infrastructure_Gray infrastructure`,Gray infrastructure -* Gray infrastructure
+`Gray infrastructure_Local jobs`,Gray infrastructure -> Local jobs
+`Gray infrastructure_Sediment`,Gray infrastructure -* Sediment
+`Gray infrastructure_Toxics`,Gray infrastructure -* Toxics
+`Green infrastructure_Access to nature`,Green infrastructure -> Access to nature
+`Green infrastructure_Air quality`,Green infrastructure -> Air quality
+`Green infrastructure_Climate mitigation`,Green infrastructure -> Climate mitigation
+`Green infrastructure_Flooding`,Green infrastructure -* Flooding
+`Green infrastructure_Green infrastructure`,Green infrastructure -* Green infrastructure
+`Green infrastructure_Local jobs`,Green infrastructure -> Local jobs
+`Green infrastructure_Noise`,Green infrastructure -* Noise
+`Green infrastructure_Sediment`,Green infrastructure -* Sediment
+`Green infrastructure_Toxics`,Green infrastructure -* Toxics
+`Green infrastructure_Urban heat island`,Green infrastructure -* Urban heat island
+`Industrial_Air quality`,Industrial -* Air quality
+`Industrial_Local jobs`,Industrial -> Local jobs
+`Industrial_Residential property value`,Industrial -* Property value
+`Industrial_Urban heat island`,Industrial -> Urban heat island
+`Industrial_Water temperature`,Industrial -> Water temperature
+`Local foods_Affordability`,Local foods -> Affordability
+`Local foods_Local foods`,Local foods -* Local foods
+`Local foods_Mental health`,Local foods -> Mental health
+`Local foods_Physical health`,Local foods -> Physical health
+`Local foods_Social cohesion`,Local foods -> Social cohesion
+`Local jobs_Economic wellbeing`,Local jobs -> Economic wellbeing
+`Local jobs_Local jobs`,Local jobs -* Local jobs
+`Local jobs_Residential property value`,Local jobs -> Property value
+`Local jobs_Social cohesion`,Local jobs -> Social cohesion
+`Mental health_Economic wellbeing`,Mental health -> Economic wellbeing
+`Mental health_Mental health`,Mental health -* Mental health
+`Mental health_Physical health`,Mental health -> Physical health
+`Noise_Mental health`,Noise -* Mental health
+`Noise_Physical health`,Noise -* Physical health
+`Noise_Residential property value`,Noise -* Property value
+`Noise_Social cohesion`,Noise -* Social cohesion
+`Nutrients_Water quality`,Nutrients -* Water quality
+`Physical health_Economic wellbeing`,Physical health -> Economic wellbeing
+`Physical health_Mental health`,Physical health -> Mental health
+`Physical health_Physical health`,Physical health -* Physical health
+`Residential property value_Affordability`,Property value -* Affordability
+`Residential property value_Economic wellbeing`,Property value -> Economic wellbeing
+`Residential property value_Residential property value`,Property value -* Property value
+`Salmon_Local foods`,Salmon -> Local foods
+`Salmon_Physical health`,Salmon -> Physical health
+`Sediment_Water quality`,Sediment -* Water quality
+`Social cohesion_Mental health`,Social cohesion -> Mental health
+`Social cohesion_Social cohesion`,Social cohesion -* Social cohesion
+`Source control_Source control`,Source control -* Source control
+`Source control_Toxics`,Source control -* Toxics
+`Toxics_Physical health`,Toxics -* Physical health
+`Toxics_Water quality`,Toxics -* Water quality
+`Transportation_Air quality`,Transportation -* Air quality
+`Transportation_Residential property value`,Transportation -> Property value
+`Transportation_Urban heat island`,Transportation -> Urban heat island
+`Transportation_Water temperature`,Transportation -> Water temperature
+`Urban heat island_Biodiversity`,Urban heat island -* Biodiversity
+`Urban heat island_Physical health`,Urban heat island -* Physical health
+`Urban heat island_Urban heat island`,Urban heat island -* Urban heat island
+`Urban heat island_Water temperature`,Urban heat island -> Water temperature
+`Walkability_Air quality`,Walkability -> Air quality
+`Walkability_Climate mitigation`,Walkability -> Climate mitigation
+`Walkability_Physical health`,Walkability -> Physical health
+`Walkability_Residential property value`,Walkability -> Property value
+`Walkability_Social cohesion`,Walkability -> Social cohesion
+`Water quality_Biodiversity`,Water quality -> Biodiversity
+`Water quality_Local foods`,Water quality -> Local foods
+`Water quality_Physical health`,Water quality -> Physical health
+`Water quality_Salmon`,Water quality -> Salmon
+`Water quality_Social cohesion`,Water quality -> Social cohesion
+`Water quality_Water quality`,Water quality -* Water quality
+`Water temperature_Water quality`,Water temperature -* Water quality
+`Water temperature_Water temperature`,Water temperature -* Water temperature
+Affordability_Affordability,Affordability -* Affordability
+Bacteria_Bacteria,Bacteria -* Bacteria
+Biodiversity_Biodiversity,Biodiversity -* Biodiversity
+Biodiversity_Salmon,Biodiversity -> Salmon
+Flooding_Bacteria,Flooding -> Bacteria
+Flooding_Flooding,Flooding -* Flooding
+Flooding_Salmon,Flooding -* Salmon
+Flooding_Sediment,Flooding -> Sediment
+Industrial_Flooding,Industrial -> Flooding
+Industrial_Industrial,Industrial -* Industrial
+Industrial_Noise,Industrial -> Noise
+Industrial_Sediment,Industrial -> Sediment
+Industrial_Toxics,Industrial -> Toxics
+Noise_Biodiversity,Noise -* Biodiversity
+Noise_Noise,Noise -* Noise
+Nutrients_Nutrients,Nutrients -* Nutrients
+Residential_Bacteria,Residential -> Bacteria
+Residential_Nutrients,Residential -> Nutrients
+Residential_Residential,Residential -* Residential
+Residential_Sediment,Residential -> Sediment
+Residential_Toxics,Residential -> Toxics
+Salmon_Biodiversity,Salmon -> Biodiversity
+Salmon_Salmon,Salmon -* Salmon
+Sediment_Sediment,Sediment -* Sediment
+Toxics_Biodiversity,Toxics -* Biodiversity
+Toxics_Salmon,Toxics -* Salmon
+Toxics_Toxics,Toxics -* Toxics
+Transportation_Flooding,Transportation -> Flooding
+Transportation_Noise,Transportation -> Noise
+Transportation_Toxics,Transportation -> Toxics
+Transportation_Transportation,Transportation -* Transportation
+Walkability_Affordability,Walkability -> Affordability
+Walkability_Noise,Walkability -* Noise
+Walkability_Walkability,Walkability -* Walkability
