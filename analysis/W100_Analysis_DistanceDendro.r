@@ -30,6 +30,8 @@ s <- QPress::community.sampler(edges)
 #                         perturb=c("Rabbits"=1),
 #                         monitor=c("Rabbits"=1,"Tall tussock vegetation"=-1))
 
+
+##### Source Control + Residential #####
 ## Function to define the perturbation scenario
 impact <- QPress::press.impact(edges,perturb=c("Source control"=1, "Residential"=1)) #node name and direction of perturbation
 
@@ -95,13 +97,165 @@ fit1 <- hclust(as.dist(dist.scale.1))
 fit2 <- hclust(as.dist(dist.scale.2))
 fit3 <- hclust(as.dist(dist.scale.3))
 
-png("figs/DistanceDendro_x3.png", width = 13, height = 7, units = 'in', res = 300)
+png("figs/DistanceDendro_x3_ResSou.png", width = 13, height = 7, units = 'in', res = 300)
 par(mfrow = c(1,3))
 plot(fit1,xlab="", ylab='Distance (d1)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
 #dev.new()
 plot(fit2,xlab='', ylab='Distance (d2)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
 #dev.new()
 plot(fit3,xlab='', ylab='Distance (d3)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
+dev.off()
+
+
+##### Gray Infrastructure + Residential #####
+## Function to define the perturbation scenario
+impact <- QPress::press.impact(edges,perturb=c("Gray infrastructure"=1, "Residential"=1)) #node name and direction of perturbation
+
+## Use 1000 simulations
+n.sims <- 1000
+dist <- list(0,0,0)
+i <- 0
+while(i < n.sims) {
+  
+  
+  ## Sample community matrix
+  z <- s$select(runif(1))
+  W <- s$community()
+  
+  ## Check stability
+  if(!stable.community(W)) next
+  
+  ## Monitor impact post press
+  imp <- sign(impact(W))
+  
+  ## Compute distances
+  dist[[1]] <- dist[[1]] + outer(imp,imp,function(x,y) abs(x-y))
+  dist[[2]] <- dist[[2]] + outer(imp,imp,function(x,y) as.numeric(x!=y & x!=0 & y!=0))
+  dist[[3]] <- dist[[3]] + outer(imp,imp,function(x,y) x!=y)
+  i <- i+1
+}
+
+dist.scale <- list(0,0,0)
+for(i in 1:3){
+  rownames(dist[[i]]) <- levels(edges$From)
+  colnames(dist[[i]]) <- levels(edges$From)
+  dist.scale[[i]] <- dist[[i]]/max(dist[[i]])
+}
+
+## Use clustering to show similarity in model variable responses, including land uses and solutions
+fit1 <- hclust(as.dist(dist.scale[[1]]))
+fit2 <- hclust(as.dist(dist.scale[[2]]))
+fit3 <- hclust(as.dist(dist.scale[[3]]))
+plot(fit1,xlab='',ylab='Distance (d1)')
+#dev.new()
+plot(fit2,xlab='',ylab='Distance (d2)')
+#dev.new()
+plot(fit3,xlab='',ylab='Distance (d3)')
+
+
+#remove the solution and land use nodes from the distance list
+to_remove <- c("Green infrastructure", "Gray infrastructure", "Source control", "Residential", "Transportation", "Industrial")
+
+dist.scale.1 <- dist.scale[[1]] 
+dist.scale.1 <- dist.scale.1[!(rownames(dist.scale.1) %in% to_remove),]
+dist.scale.1 <- dist.scale.1[,!(colnames(dist.scale.1) %in% to_remove)]
+
+dist.scale.2 <- dist.scale[[2]] 
+dist.scale.2 <- dist.scale.2[!(rownames(dist.scale.2) %in% to_remove),]
+dist.scale.2 <- dist.scale.2[,!(colnames(dist.scale.2) %in% to_remove)]
+
+dist.scale.3 <- dist.scale[[3]] 
+dist.scale.3 <- dist.scale.3[!(rownames(dist.scale.3) %in% to_remove),]
+dist.scale.3 <- dist.scale.3[,!(colnames(dist.scale.3) %in% to_remove)]
+
+## Use clustering to show similarity in model variable responses, EXCLUDING land uses and solutions
+fit1 <- hclust(as.dist(dist.scale.1))
+fit2 <- hclust(as.dist(dist.scale.2))
+fit3 <- hclust(as.dist(dist.scale.3))
+
+png("figs/DistanceDendro_x3_ResGra.png", width = 13, height = 7, units = 'in', res = 300)
+par(mfrow = c(1,3))
+plot(fit1,xlab="", ylab='Distance (d1)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
+#dev.new()
+plot(fit2,xlab='', ylab='Distance (d2)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
+#dev.new()
+plot(fit3,xlab='', ylab='Distance (d3)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
+dev.off()
+
+
+##### Green Infrastructure + Residential #####
+## Function to define the perturbation scenario
+impact <- QPress::press.impact(edges,perturb=c("Green infrastructure"=1, "Residential"=1)) #node name and direction of perturbation
+
+## Use 1000 simulations
+n.sims <- 1000
+dist <- list(0,0,0)
+i <- 0
+while(i < n.sims) {
+  
+  
+  ## Sample community matrix
+  z <- s$select(runif(1))
+  W <- s$community()
+  
+  ## Check stability
+  if(!stable.community(W)) next
+  
+  ## Monitor impact post press
+  imp <- sign(impact(W))
+  
+  ## Compute distances
+  dist[[1]] <- dist[[1]] + outer(imp,imp,function(x,y) abs(x-y))
+  dist[[2]] <- dist[[2]] + outer(imp,imp,function(x,y) as.numeric(x!=y & x!=0 & y!=0))
+  dist[[3]] <- dist[[3]] + outer(imp,imp,function(x,y) x!=y)
+  i <- i+1
+}
+
+dist.scale <- list(0,0,0)
+for(i in 1:3){
+  rownames(dist[[i]]) <- levels(edges$From)
+  colnames(dist[[i]]) <- levels(edges$From)
+  dist.scale[[i]] <- dist[[i]]/max(dist[[i]])
+}
+
+## Use clustering to show similarity in model variable responses, including land uses and solutions
+fit1 <- hclust(as.dist(dist.scale[[1]]))
+fit2 <- hclust(as.dist(dist.scale[[2]]))
+fit3 <- hclust(as.dist(dist.scale[[3]]))
+plot(fit1,xlab='',ylab='Distance (d1)')
+#dev.new()
+plot(fit2,xlab='',ylab='Distance (d2)')
+#dev.new()
+plot(fit3,xlab='',ylab='Distance (d3)')
+
+
+#remove the solution and land use nodes from the distance list
+to_remove <- c("Green infrastructure", "Gray infrastructure", "Source control", "Residential", "Transportation", "Industrial")
+
+dist.scale.1 <- dist.scale[[1]] 
+dist.scale.1 <- dist.scale.1[!(rownames(dist.scale.1) %in% to_remove),]
+dist.scale.1 <- dist.scale.1[,!(colnames(dist.scale.1) %in% to_remove)]
+
+dist.scale.2 <- dist.scale[[2]] 
+dist.scale.2 <- dist.scale.2[!(rownames(dist.scale.2) %in% to_remove),]
+dist.scale.2 <- dist.scale.2[,!(colnames(dist.scale.2) %in% to_remove)]
+
+dist.scale.3 <- dist.scale[[3]] 
+dist.scale.3 <- dist.scale.3[!(rownames(dist.scale.3) %in% to_remove),]
+dist.scale.3 <- dist.scale.3[,!(colnames(dist.scale.3) %in% to_remove)]
+
+## Use clustering to show similarity in model variable responses, EXCLUDING land uses and solutions
+fit1 <- hclust(as.dist(dist.scale.1))
+fit2 <- hclust(as.dist(dist.scale.2))
+fit3 <- hclust(as.dist(dist.scale.3))
+
+png("figs/DistanceDendro_x3_ResGre.png", width = 13, height = 7, units = 'in', res = 300)
+par(mfrow = c(1,3))
+plot(fit1, xlab="", ylab='Distance (d1)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
+#dev.new()
+plot(fit2, xlab='', ylab='Distance (d2)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
+#dev.new()
+plot(fit3, xlab='', ylab='Distance (d3)', main = "", cex.lab = 1.5, cex.axis = 1.5, cex=1.5)
 dev.off()
 
 
