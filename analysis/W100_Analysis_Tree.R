@@ -20,7 +20,7 @@ library(tidyr)
 
 
 ##### Read model specification ##### 
-edges <- QPress::model.dia("./DiaModels/SolutionModel_25Oct2022_forR.dia")
+edges <- QPress::model.dia("./model/SolutionModel_25Oct2022_forR.dia")
 edges <- enforce.limitation(edges)
 
 ## Examine unweighted adjacency matrix
@@ -793,7 +793,7 @@ trans_relinf_byNode <- trans_relinf %>% filter(relative_influence >0.999) %>%
 
 
 
-##### combine the relinf datasets for all three land uses ##### 
+##### Combine and rank the relinf datasets for all three land uses ##### 
 
 relinf_all <- rbind(trans_relinf, indus_relinf, resi_relinf)
 
@@ -804,20 +804,13 @@ relinf_all <- relinf_all %>% group_by(Solution, Node, LandUse) %>% mutate(cum_su
 
 write.csv(relinf_all, "RelativeInfluence_BiodivPhysHealth.csv", row.names = FALSE)
 
+##### plot the relative influence values across land use and solution #####
+relinf_all <- read.csv("./results/RelativeInfluence_BiodivPhysHealth.csv")
+#merge with link_type
+link_key <- read.csv("./model/KEY_LinkName_forRelInf_30Dec.csv", header = TRUE) 
+relinf_all <- relinf_all %>% full_join(link_key, by = "link")
+relinf_all <- select(relinf_all, !var)
 
-#plot the relative influence values across land use and solution
-relinf_rank <- relinf_all %>% 
-  ggplot(aes(y = relative_influence, x = rank, color = Solution, linetype = Solution)) + 
-  geom_line(size = 0.9) +
-  facet_wrap(~LandUse+Node, ncol = 2) + 
-  theme_bw() +
-  scale_colour_viridis_d() +
-  theme(panel.grid = element_blank(), axis.text = element_text(size = 15), axis.title = element_text(size = 18),
-        legend.text = element_text(size = 15),
-        legend.title = element_text(size = 17),
-        strip.text.x = element_text(size = 15)) +
-  theme(panel.grid.major.y = element_line(color = "gray96")) +
-  labs(y = "Relative influence", x = "Link Rank")
 
 relinf_cumulative <- relinf_all %>% 
   ggplot(aes(y = cum_sum, x = rank, color = Solution, linetype = Solution)) + 
@@ -831,11 +824,75 @@ relinf_cumulative <- relinf_all %>%
         strip.text.x = element_text(size = 15)) +
   theme(panel.grid.major.y = element_line(color = "gray96")) +
   labs(y = "Relative influence (cumulative sum)", x = "Link")
+ggsave("./figs/RelInf_CumulativeCurves.png", width = 11, height = 8, device='png', dpi=400)
+
+
+#plot all the link relinf across land uses and sources 
+plot_relinf_tiles <- relinf_all %>% 
+  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
+  ggplot(aes(x = Solution, y = link, fill = relative_influence)) +
+  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 9) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=4/1) +
+  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(0, 30), breaks = c(0, 10, 20, 30),
+                                                      colours=c("#FFFFFF", "#FFA590", "#FF6242", "#FB3B1E"),
+                                                      labels = c("0", "10", "20", "30")) +
+  facet_wrap(~Node+LandUse, ncol = 6) + 
+  guides(fill = guide_colourbar(barwidth = 1.5,
+                                barheight = 16)) + #size of the legend bar
+  labs(x = "Stormwater Solution", y = "Link", fill = element_blank(), size = 12)
+ggsave("./figs/RelInf_Tiles_byLandUse.png", width = 13, height = 9, device='png', dpi=700)
+
+#plot just the inter-node links
+plot_relinf_tiles_inter <- relinf_all %>% filter(link_type == "inter") %>%
+  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
+  ggplot(aes(x = Solution, y = link, fill = relative_influence)) +
+  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 10) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=4/1) +
+  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(0, 30), breaks = c(0, 10, 20, 30),
+                                                      colours=c("#FFFFFF", "#FFA590", "#FF6242", "#FB3B1E"),
+                                                      labels = c("0", "10", "20", "30")) +
+  facet_wrap(~Node+LandUse, ncol = 6) + 
+  guides(fill = guide_colourbar(barwidth = 1.5,
+                                barheight = 16)) + #size of the legend bar
+  labs(x = "Stormwater Solution", y = "Inter-Node Link", fill = element_blank(), size = 12)
+ggsave("./figs/RelInf_Tiles_byLandUse_interlinks.png", width = 13, height = 9, device='png', dpi=700)
+
+
+#inter-node links
+plot_relinf_tiles_inter <- relinf_all %>% filter(link_type == "inter") %>%
+  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
+  ggplot(aes(x = Solution, y = link, fill = relative_influence)) +
+  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 10) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=4/1) +
+  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(0, 30), breaks = c(0, 10, 20, 30),
+                                                      colours=c("#FFFFFF", "#FFA590", "#FF6242", "#FB3B1E"),
+                                                      labels = c("0", "10", "20", "30")) +
+  facet_wrap(~Node+LandUse, ncol = 6) + 
+  guides(fill = guide_colourbar(barwidth = 1.5,
+                                barheight = 16)) + #size of the legend bar
+  labs(x = "Stormwater Solution", y = "Inter-Node Link", fill = element_blank(), size = 12)
+ggsave("./figs/RelInf_Tiles_byLandUse_interlinks.png", width = 13, height = 9, device='png', dpi=700)
+
+
+#plot just the self-effects links
+plot_relinf_tiles_self <- relinf_all %>% filter(link_type == "self") %>%
+  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
+  ggplot(aes(x = Solution, y = link, fill = relative_influence)) +
+  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 14) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=3/1) +
+  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(0, 30), breaks = c(0, 10, 20, 30),
+                                                      colours=c("#FFFFFF", "#FFA590", "#FF6242", "#FB3B1E"),
+                                                      labels = c("0", "10", "20", "30")) +
+  facet_wrap(~Node+LandUse, ncol = 3) + 
+  guides(fill = guide_colourbar(barwidth = 1.5,
+                                barheight = 16)) + #size of the legend bar
+  labs(x = "Stormwater Solution", y = "Self-effect Link", fill = element_blank(), size = 12)
+ggsave("./figs/RelInf_Tiles_byLandUse_selflinks.png", width = 13, height = 9, device='png', dpi=700)
 
 
 #plot the links with the highest (top 10) relative influence across solutions for each Land Use
 # RESIDENTIAL
-relinf_top10links_res <- relinf_all %>% filter(LandUse == "Residential" & rank < 5) %>% ungroup() %>% select(link) %>% distinct()
+relinf_top10links_res <- relinf_all %>% filter(LandUse == "Residential" & rank < 6) %>% ungroup() %>% select(link) %>% distinct()
 relinf_top10_res <- relinf_all %>% ungroup() %>% filter(LandUse == "Residential") %>% inner_join(relinf_top10links_res, by = "link")
 
 relinf_top_resi <- relinf_top10_res %>% mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
@@ -854,7 +911,7 @@ relinf_top_resi <- relinf_top10_res %>% mutate(across(Solution, factor, levels=c
 ggsave("figures/RelInf_TopLinks_Residential.png", width = 11, height = 8, device='png', dpi=400)
 
 # INDUSTRIAL
-relinf_top10links_indus <- relinf_all %>% filter(LandUse == "Industrial" & rank < 5) %>% ungroup() %>% select(link) %>% distinct()
+relinf_top10links_indus <- relinf_all %>% filter(LandUse == "Industrial" & rank < 6) %>% ungroup() %>% select(link) %>% distinct()
 relinf_top10_indus <- relinf_all %>% ungroup() %>% filter(LandUse == "Industrial") %>% inner_join(relinf_top10links_indus, by = "link")
 
 relinf_top_indus <- relinf_top10_indus %>% mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
@@ -873,7 +930,7 @@ relinf_top_indus <- relinf_top10_indus %>% mutate(across(Solution, factor, level
 ggsave("figures/RelInf_TopLinks_Industrial.png", width = 11, height = 8, device='png', dpi=400)
 
 # TRANSPORTATION
-relinf_top10links_trans <- relinf_all %>% filter(LandUse == "Transportation" & rank < 5) %>% ungroup() %>% select(link) %>% distinct()
+relinf_top10links_trans <- relinf_all %>% filter(LandUse == "Transportation" & rank < 6) %>% ungroup() %>% select(link) %>% distinct()
 relinf_top10_trans <- relinf_all %>% ungroup() %>% filter(LandUse == "Transportation") %>% inner_join(relinf_top10links_trans, by = "link")
 
 relinf_top_trans <- relinf_top10_trans %>% mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
@@ -890,3 +947,51 @@ relinf_top_trans <- relinf_top10_trans %>% mutate(across(Solution, factor, level
   theme(panel.grid.major.y = element_line(color = "gray96")) +
   labs(y = "Relative influence", x = "Solution") #+ annotate("text", x = 0.65, y = 25, label = "Transportation", size = 6)
 ggsave("figures/RelInf_TopLinks_Transportation.png", width = 11, height = 8, device='png', dpi=400)
+
+
+#join all the top links from each land use
+top_links <- rbind(relinf_top10links_res, relinf_top10links_trans, relinf_top10links_indus) %>% select(link) %>% distinct()
+
+#plot all the link relinf across land uses and sources 
+plot_relinf_tiles_top <- relinf_all %>% inner_join(top_links, by = "link") %>% 
+  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
+  ggplot(aes(x = Solution, y = link, fill = relative_influence)) +
+  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 9) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=4/1) +
+  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(0, 30), breaks = c(0, 10, 20, 30),
+                                                      colours=c("#FFFFFF", "#FFA590", "#FF6242", "#FB3B1E"),
+                                                      labels = c("0", "10", "20", "30")) +
+  facet_wrap(~Node+LandUse, ncol = 3) + 
+  guides(fill = guide_colourbar(barwidth = 1.5,
+                                barheight = 16)) + #size of the legend bar
+  labs(x = "Stormwater Solution", y = "Link", fill = element_blank(), size = 12)
+ggsave("./figs/RelInf_Tiles_byLandUse_Top.png", width = 13, height = 9, device='png', dpi=700)
+
+#plot all the link relinf across land uses and sources 
+plot_relinf_tiles_top_self <- relinf_all %>% inner_join(top_links, by = "link") %>% filter(link_type == "self") %>%
+  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
+  ggplot(aes(x = Solution, y = link, fill = relative_influence)) +
+  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 9) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=4/1) +
+  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(0, 30), breaks = c(0, 10, 20, 30),
+                                                      colours=c("#FFFFFF", "#FFA590", "#FF6242", "#FB3B1E"),
+                                                      labels = c("0", "10", "20", "30")) +
+  facet_wrap(~Node+LandUse, ncol = 3) + 
+  guides(fill = guide_colourbar(barwidth = 1.5,
+                                barheight = 16)) + #size of the legend bar
+  labs(x = "Stormwater Solution", y = "Link", fill = element_blank(), size = 12)
+ggsave("./figs/RelInf_Tiles_byLandUse_Top_Self.png", width = 9, height = 9, device='png', dpi=700)
+
+plot_relinf_tiles_top_inter <- relinf_all %>% inner_join(top_links, by = "link") %>% filter(link_type == "inter") %>%
+  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
+  ggplot(aes(x = Solution, y = link, fill = relative_influence)) +
+  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 14) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=3/1) +
+  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(0, 21), breaks = c(0, 7, 14, 21),
+                                                      colours=c("#FFFFFF", "#FFA590", "#FF6242", "#FB3B1E"),
+                                                      labels = c("0", "7", "14", "21")) +
+  facet_wrap(~Node+LandUse, ncol = 3) + 
+  guides(fill = guide_colourbar(barwidth = 1.5,
+                                barheight = 16)) + #size of the legend bar
+  labs(x = "Stormwater Solution", y = "Inter-Node Link", fill = element_blank(), size = 12)
+ggsave("./figs/RelInf_Tiles_byLandUse_Top_Inter.png", width = 9, height = 9, device='png', dpi=700)
