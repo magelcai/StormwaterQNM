@@ -675,11 +675,11 @@ write.csv(diffresults_indus_2, "IterateResults_Difference_Indus_Opt2_27Oct2022.c
 
 ###### OPTION 2: plot the differences for green infrastructure & residential #####
 #If needed, load the results from CSV and get them in the correct format for plotting
-diffresults_res_2 <- read.csv("IterateResults_Difference_Resi_Opt2_27Oct2022.csv", header = TRUE, check.names=FALSE)
+diffresults_res_2 <- read.csv("./results/IterateResults_Difference_Resi_Opt2_27Oct2022.csv", header = TRUE, check.names=FALSE)
 diffresults_resALL_2_plot <- gather(diffresults_res_2, key="Node", value="difference", 3:31)
-diffresults_indus_2 <- read.csv("IterateResults_Difference_Indus_Opt2_27Oct2022.csv", header = TRUE, check.names=FALSE)
+diffresults_indus_2 <- read.csv("./results/IterateResults_Difference_Indus_Opt2_27Oct2022.csv", header = TRUE, check.names=FALSE)
 diffresults_indusALL_2_plot <- gather(diffresults_indus_2, key="Node", value="difference", 3:31)
-diffresults_trans_2 <- read.csv("IterateResults_Difference_Trans_Opt2_27Oct2022.csv", header = TRUE, check.names=FALSE)
+diffresults_trans_2 <- read.csv("./results/IterateResults_Difference_Trans_Opt2_27Oct2022.csv", header = TRUE, check.names=FALSE)
 diffresults_transALL_2_plot <- gather(diffresults_trans_2, key="Node", value="difference", 3:31)
 
 #select green solution
@@ -839,28 +839,10 @@ plot_salm_pval_2 <- diffresults_resgre_2_plot_salm_pval %>% mutate(Link = fct_re
 diffresults_resALL_2_plot$difference_perc <- diffresults_resALL_2_plot$difference*100
 
 #Add Node Type so we can filter by benefits, stressors, etc
-key <- read.csv("KEY_NodeType.csv", header = TRUE, check.names=FALSE) #load Node Type key
+key <- read.csv("./model/KEY_NodeType.csv", header = TRUE, check.names=FALSE) #load Node Type key
 diffresults_resALL_2_plot_key <- full_join(diffresults_resALL_2_plot, key, by = "Node") # join the key with the results
 diffresults_resALL_2_plot_key_nofull <- subset(diffresults_resALL_2_plot_key, ModelName != "Sims_Mod_full") # remove the full model from the dataframe
 
-
-plot_allResALL_categ_bySol <- diffresults_resALL_2_plot_key_nofull %>% filter(Type == "human"| Type == "nature") %>%
-  mutate(across(Node, factor, levels=c("Biodiversity", "Climate mitigation", "Salmon", "Water quality", "Access to nature", "Air quality",
-                                       "Local foods", "Mental health", "Physical health", "Social cohesion", "Walkability", "Affordability", "Economic wellbeing",
-                                       "Local jobs", "Property value"))) %>%
-  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
-  ggplot(aes(x = Node, y = Link, fill = difference_perc)) +
-  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 8) +
-  theme(panel.grid.major = element_blank(), aspect.ratio=9/3) +
-  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(-105, 105), breaks = c(-105, -50, 0, 50, 105),
-                                                      colours=c("#219ebc", "#8ecae6", "#FAF9F6", "#ef233c", "#d90429"),
-                                                      labels = c("-100%", "-50%", "no change", "+50%", "+100%")) +
-  facet_wrap(~Solution) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #rotate the x axis labels
-  guides(fill = guide_colourbar(barwidth = 1.5,
-                                barheight = 16)) + #size of the legend bar
-  labs(x = "Benefit Node", y = "Excluded Link", fill = element_blank(), size = 12)
-ggsave("figures/LOO_Resi_bySol.png", width = 13, height = 9, device='png', dpi=700)
 
 
 plot_allResALL_categ_byNode <- diffresults_resALL_2_plot_key_nofull %>% filter(Type == "human"| Type == "nature") %>%
@@ -870,16 +852,16 @@ plot_allResALL_categ_byNode <- diffresults_resALL_2_plot_key_nofull %>% filter(T
   mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
   ggplot(aes(x = Solution, y = Link, fill = difference_perc)) +
   geom_tile(color = "white", lwd = 0.6, linetype = 1) + coord_fixed() + theme_bw(base_size = 8) +
-  theme(panel.grid.major = element_blank(), aspect.ratio=34/2) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=30/2) +
   scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(-105, 105), breaks = c(-105, -50, 0, 50, 105),
-                                                      colours=c("#219ebc", "#8ecae6", "#FAF9F6", "#ef233c", "#d90429"),
+                                                      colours=c("#219ebc", "#8ecae6", "#FFFFFF", "#ef233c", "#d90429"),
                                                       labels = c("-100%", "-50%", "no change", "+50%", "+100%")) +
   facet_wrap(~Node, ncol = 15, labeller = label_wrap_gen(width = 12, multi_line = TRUE)) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #rotate the x axis labels
   guides(fill = guide_colourbar(barwidth = 1.5,
                                 barheight = 16)) + #size of the legend bar
   labs(x = "Stormwater Solution", y = "Excluded Link", fill = element_blank(), size = 12)
-ggsave("figures/LOO_Resi_byNode.png", width = 13, height = 9, device='png', dpi=700)
+ggsave("./figs/LOO_Resi_byNode.png", width = 12, height = 9, device='png', dpi=700)
 
 
 # INDUSTRIAL LAND USE
@@ -892,25 +874,6 @@ diffresults_indusALL_2_plot_key <- full_join(diffresults_indusALL_2_plot, key, b
 diffresults_indusALL_2_plot_key_nofull <- subset(diffresults_indusALL_2_plot_key, ModelName != "Sims_Mod_full") # remove the full model from the dataframe
 
 
-plot_allIndusALL_categ_bySol <- diffresults_indusALL_2_plot_key_nofull %>% filter(Type == "human"| Type == "nature") %>%
-  mutate(across(Node, factor, levels=c("Biodiversity", "Climate mitigation", "Salmon", "Water quality", "Access to nature", "Air quality",
-                                       "Local foods", "Mental health", "Physical health", "Social cohesion", "Walkability", "Affordability", "Economic wellbeing",
-                                       "Local jobs", "Property value"))) %>%
-  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
-  ggplot(aes(x = Node, y = Link, fill = difference_perc)) +
-  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 8) +
-  theme(panel.grid.major = element_blank(), aspect.ratio=9/3) +
-  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(-105, 105), breaks = c(-105, -50, 0, 50, 105),
-                                                      colours=c("#219ebc", "#8ecae6", "#FAF9F6", "#ef233c", "#d90429"),
-                                                      labels = c("-100%", "-50%", "no change", "+50%", "+100%")) +
-  facet_wrap(~Solution) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #rotate the x axis labels
-  guides(fill = guide_colourbar(barwidth = 1.5,
-                                barheight = 16)) + #size of the legend bar
-  labs(x = "Benefit Node", y = "Excluded Link", fill = element_blank(), size = 12)
-ggsave("figures/LOO_Indus_bySol.png", width = 13, height = 9, device='png', dpi=700)
-
-
 plot_allIndusALL_categ_byNode <- diffresults_indusALL_2_plot_key_nofull %>% filter(Type == "human"| Type == "nature") %>%
   mutate(across(Node, factor, levels=c("Biodiversity", "Climate mitigation", "Salmon", "Water quality", "Access to nature", "Affordability", "Air quality",
                                        "Economic wellbeing", "Local foods", "Local jobs", "Mental health", "Physical health", "Property value",
@@ -918,16 +881,16 @@ plot_allIndusALL_categ_byNode <- diffresults_indusALL_2_plot_key_nofull %>% filt
   mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
   ggplot(aes(x = Solution, y = Link, fill = difference_perc)) +
   geom_tile(color = "white", lwd = 0.6, linetype = 1) + coord_fixed() + theme_bw(base_size = 8) +
-  theme(panel.grid.major = element_blank(), aspect.ratio=34/2) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=30/2) +
   scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(-105, 105), breaks = c(-105, -50, 0, 50, 105),
-                                                      colours=c("#219ebc", "#8ecae6", "#FAF9F6", "#ef233c", "#d90429"),
+                                                      colours=c("#219ebc", "#8ecae6", "#FFFFFF", "#ef233c", "#d90429"),
                                                       labels = c("-100%", "-50%", "no change", "+50%", "+100%")) +
   facet_wrap(~Node, ncol = 15, labeller = label_wrap_gen(width = 12, multi_line = TRUE)) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #rotate the x axis labels
   guides(fill = guide_colourbar(barwidth = 1.5,
                                 barheight = 16)) + #size of the legend bar
   labs(x = "Stormwater Solution", y = "Excluded Link", fill = element_blank(), size = 12)
-ggsave("figures/LOO_Indus_byNode.png", width = 13, height = 9, device='png', dpi=700)
+ggsave("./figs/LOO_Indus_byNode.png", width = 12, height = 9, device='png', dpi=700)
 
 
 # TRANSPORTATION LAND USE
@@ -940,24 +903,6 @@ diffresults_transALL_2_plot_key <- full_join(diffresults_transALL_2_plot, key, b
 diffresults_transALL_2_plot_key_nofull <- subset(diffresults_transALL_2_plot_key, ModelName != "Sims_Mod_full") # remove the full model from the dataframe
 
 
-plot_allTransALL_categ_bySol <- diffresults_transALL_2_plot_key_nofull %>% filter(Type == "human"| Type == "nature") %>%
-  mutate(across(Node, factor, levels=c("Biodiversity", "Climate mitigation", "Salmon", "Water quality", "Access to nature", "Air quality",
-                                       "Local foods", "Mental health", "Physical health", "Social cohesion", "Walkability", "Affordability", "Economic wellbeing",
-                                       "Local jobs", "Property value"))) %>%
-  mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
-  ggplot(aes(x = Node, y = Link, fill = difference_perc)) +
-  geom_tile(color = "white", lwd = 0.5, linetype = 1) + coord_fixed() + theme_bw(base_size = 8) +
-  theme(panel.grid.major = element_blank(), aspect.ratio=9/3) +
-  scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(-105, 105), breaks = c(-105, -50, 0, 50, 105),
-                                                      colours=c("#219ebc", "#8ecae6", "#FAF9F6", "#ef233c", "#d90429"),
-                                                      labels = c("-100%", "-50%", "no change", "+50%", "+100%")) +
-  facet_wrap(~Solution) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #rotate the x axis labels
-  guides(fill = guide_colourbar(barwidth = 1.5,
-                                barheight = 16)) + #size of the legend bar
-  labs(x = "Benefit Node", y = "Excluded Link", fill = element_blank(), size = 12)
-ggsave("figures/LOO_Trans_bySol.png", width = 13, height = 9, device='png', dpi=700)
-
 
 plot_allTransALL_categ_byNode <- diffresults_transALL_2_plot_key_nofull %>% filter(Type == "human"| Type == "nature") %>%
   mutate(across(Node, factor, levels=c("Biodiversity", "Climate mitigation", "Salmon", "Water quality", "Access to nature", "Affordability", "Air quality",
@@ -966,16 +911,16 @@ plot_allTransALL_categ_byNode <- diffresults_transALL_2_plot_key_nofull %>% filt
   mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
   ggplot(aes(x = Solution, y = Link, fill = difference_perc)) +
   geom_tile(color = "white", lwd = 0.6, linetype = 1) + coord_fixed() + theme_bw(base_size = 8) +
-  theme(panel.grid.major = element_blank(), aspect.ratio=34/2) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=30/2) +
   scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(-105, 105), breaks = c(-105, -50, 0, 50, 105),
-                                                      colours=c("#219ebc", "#8ecae6", "#FAF9F6", "#ef233c", "#d90429"),
+                                                      colours=c("#219ebc", "#8ecae6", "#FFFFFF", "#ef233c", "#d90429"),
                                                       labels = c("-100%", "-50%", "no change", "+50%", "+100%")) +
   facet_wrap(~Node, ncol = 15, labeller = label_wrap_gen(width = 12, multi_line = TRUE)) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #rotate the x axis labels
   guides(fill = guide_colourbar(barwidth = 1.5,
                                 barheight = 16)) + #size of the legend bar
   labs(x = "Stormwater Solution", y = "Excluded Link", fill = element_blank(), size = 12)
-ggsave("figures/LOO_Trans_byNode.png", width = 13, height = 9, device='png', dpi=700)
+ggsave("./figs/LOO_Trans_byNode.png", width = 12, height = 9, device='png', dpi=700)
 
 
 
@@ -987,21 +932,23 @@ diffresults_ALL_2_plot_key_nofull$Node <- as.factor(diffresults_ALL_2_plot_key_n
 write.csv(diffresults_ALL_2_plot_key_nofull, "IterateResults_Difference_AllUses_Opt2_27Oct2022.csv", row.names = F)
 
 plot_ALL_byNode <- diffresults_ALL_2_plot_key_nofull %>% filter(Node == "Biodiversity"| Node == "Water quality"| Node == "Air quality"
-                                                                              | Node == "Physical health" | Node == "Economic wellbeing") %>%
-  mutate(across(Node, factor, levels=c("Biodiversity", "Water quality", "Air quality", "Physical health", "Economic wellbeing"))) %>%
+                                                                              | Node == "Physical health") %>%
+  mutate(across(Node, factor, levels=c("Biodiversity", "Water quality", "Air quality", "Physical health"))) %>%
   mutate(across(Solution, factor, levels=c("source", "gray", "green"))) %>%
   ggplot(aes(x = Solution, y = Link, fill = difference_perc)) +
   geom_tile(color = "white", lwd = 0.6, linetype = 1) + coord_fixed() + theme_bw(base_size = 8) +
-  theme(panel.grid.major = element_blank(), aspect.ratio=27/2) +
+  theme(axis.text.x = element_text(size = 10), axis.title=element_text(size=12, face="bold"), 
+        strip.text.x = element_text(size = 8), legend.text=element_text(size=10)) +
+  theme(panel.grid.major = element_blank(), aspect.ratio=19/2) +
   scale_y_discrete(limits=rev) + scale_fill_gradientn(limits = c(-105, 105), breaks = c(-105, -50, 0, 50, 105),
-                                                      colours=c("#219ebc", "#8ecae6", "#FAF9F6", "#ef233c", "#d90429"),
+                                                      colours=c("#219ebc", "#8ecae6", "#FFFFFF", "#ef233c", "#d90429"),
                                                       labels = c("-100%", "-50%", "no change", "+50%", "+100%")) +
   facet_wrap(~LandUse + Node, ncol = 15, labeller = label_wrap_gen(width = 12, multi_line = TRUE)) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #rotate the x axis labels
   guides(fill = guide_colourbar(barwidth = 1.5,
                                 barheight = 16)) + #size of the legend bar
-  labs(x = "Stormwater Solution", y = "Excluded Link", fill = element_blank(), size = 12)
-ggsave("figures/LOO_AllUses_byNode.png", width = 13, height = 9, device='png', dpi=700)
+  labs(x = "Stormwater Solution", y = "Excluded Link", fill = element_blank())
+ggsave("./figs/LOO_AllUses_byNode.png", width = 13, height = 9, device='png', dpi=700)
 
 
 ##### OPTION 3: summarize perturbation results using solution+landuse - land use #####
